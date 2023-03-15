@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="A portfolio site for showcasing projects and skills." />
+	<meta name="keywords" content="HTML, CSS, JavaScript" />
+	<meta name="author" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Personal Portfolio</title>
+	<link href="images/favicon.ico" rel="icon" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.1/purify.js"></script>
+</head>
+
+<body>
+	<h1>Native Dialogs</h1>
+	
+	<input type="button" id="alert" name="alert" value="Alert" />
+	<input type="button" id="confirm" name="confirm" value="Confirm" />
+	<input type="button" id="prompt" name="prompt" value="Prompt" />
+	<input type="button" id="saferPrompt" name="saferPrompt" value="SaferPrompt" />
+
+	<br><br>
+
+	<output></output>
+</body>
+
+<script>
+	window.addEventListener("DOMContentLoaded", init);
+	
+	function init() {
+		const alertButton = document.getElementById("alert");
+		const confirmButton = document.getElementById("confirm");
+		const promptButton = document.getElementById("prompt");
+		const saferPromptButton = document.getElementById("saferPrompt");
+
+		const output = document.querySelector("output");
+
+		alertButton.addEventListener("click", () => alert("This is an alert."));
+
+		confirmButton.addEventListener("click", () => {
+			const confirmRes = confirm("Click OK or Cancel.");
+			output.innerText = `The value returned by the confirm method is : ${confirmRes}`;
+		});
+
+		promptButton.addEventListener("click", () => {
+			const promptRes = prompt("This is a prompt.  Enter a value.");
+			if (promptRes == "" || promptRes == null) {
+				output.innerText = "User didn’t enter anything in the prompt method.";
+				return;
+			}
+				
+			output.innerText = `The value returned by the prompt: ${promptRes}`;
+		});
+
+		saferPromptButton.addEventListener("click", () => {
+			const saferPromptRes = prompt("This is a safer prompt.  Enter a value.")
+			const cleanPromptRes = DOMPurify.sanitize(saferPromptRes);
+
+			if (cleanPromptRes == "" || cleanPromptRes == null) {
+				output.innerText = "User didn’t enter anything in the prompt method.";
+				return;
+			}
+
+			output.innerText = `The value returned by the prompt: ${cleanPromptRes}`;
+		});
+	}
+</script>
+
+</html>
